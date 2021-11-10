@@ -1,1 +1,3 @@
 Dockerfile
+vocabulary-env/
+__pycache__/
