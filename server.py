@@ -12,7 +12,12 @@ games_dict = {}
 app = Flask(__name__)
 
 
-@app.route('/', methods=['POST'])
+@app.route('/api/vocabulary-trainer/health', methods=['GET'])
+def health():
+    return 'Healthy!'
+
+
+@app.route('/api/vocabulary-trainer', methods=['POST'])
 def start_game():
     ''' - `client_id` must be always provided, to either begin or resume a game.
         - If `num_words_to_play` is ever provided, existing games are replaced
