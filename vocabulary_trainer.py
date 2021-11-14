@@ -17,7 +17,7 @@ class Word:
         self.done_guessing = False  # A Game will know to instantiate a new Word
 
     def take_guess(self, guess):
-        guess = guess.strip().lower()
+        guess = str(guess).strip().lower()
 
         # If the guess is correct and they are allowed to score (no hints), end guessing
         if guess == self.word.strip().lower() and self.cannot_score is False:

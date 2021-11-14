@@ -1,23 +1,36 @@
 from flask import Flask, request
+from flask_cors import CORS
 
 from vocabulary_trainer import Game
 from definition_dict import definition_dict
 
 import json
+import os
 
 
 games_dict = {}
 
 
 app = Flask(__name__)
+CORS(app)  # , resources={r'*': {'origins': '*'}})
 
 
-@app.route('/api/vocabulary-trainer/health', methods=['GET'])
+@app.route('/api/health', methods=['GET'])
 def health():
     return 'Healthy!'
 
 
-@app.route('/api/vocabulary-trainer', methods=['POST'])
+@app.route('/api/games', methods=['GET'])
+def get_games():
+    return json.dumps(len(games_dict))
+
+
+@app.route('/api', methods=['GET'])
+def welcome():
+    return 'Instructions...'
+
+
+@app.route('/api', methods=['POST'])
 def start_game():
     ''' - `client_id` must be always provided, to either begin or resume a game.
         - If `num_words_to_play` is ever provided, existing games are replaced
@@ -29,7 +42,7 @@ def start_game():
     if 'client_id' not in request_body_dict:
         return 'Please provide `client_id`.', 400
 
-    client_id = request_body_dict['client_id']
+    client_id = str(request_body_dict['client_id'])
 
     # If a game already exists...
     if client_id in games_dict:
@@ -48,16 +61,18 @@ def start_game():
     if 'num_words_to_play' not in request_body_dict:
         return 'Please provide `num_words_to_play`.', 400
 
-    num_words_to_play = request_body_dict['num_words_to_play']
+    num_words_to_play = str(request_body_dict['num_words_to_play'])
 
-    if not num_words_to_play.isnumeric() or num_words_to_play < 1:
+    if not num_words_to_play.isnumeric() or int(num_words_to_play) < 1:
         return 'Please provide a numeric value > 0 for `num_words_to_play`.'
 
-    game = Game(definition_dict, num_words_to_play)
+    game = Game(definition_dict, int(num_words_to_play))
     games_dict[client_id] = game
 
     return game.send_response()
 
 
+PORT = os.environ['PORT'] if 'PORT' in os.environ else 5000
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=PORT)
