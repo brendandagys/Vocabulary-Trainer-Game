@@ -42,7 +42,9 @@ class Word:
 class Game:
     '''Takes a dictionary of word: definition and the count of words to train on.'''
 
-    def __init__(self, definition_dict, num_words_to_play):
+    def __init__(self, game_id, definition_dict, num_words_to_play):
+        self.game_id = game_id
+
         self.definition_list = list(definition_dict.items())  # [(,), (,)]
 
         if int(num_words_to_play) > len(self.definition_list):
@@ -114,6 +116,7 @@ class Game:
 
     def send_response(self):
         return json.dumps({
+            'game_id': self.game_id,
             'game_over': self.game_over,
             'word_letters_revealed': None if self.game_over else self.current_word_instance.word[:self.current_word_instance.letters_shown],
             'num_words_to_play': self.num_words_to_play,

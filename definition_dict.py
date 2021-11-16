@@ -290,7 +290,7 @@ definition_dict = {
     'Surmise': 'Suppose that something is true without having evidence to confirm it',
     'Surreptitious': 'Kept secret, especially because it would not be approved of',
     'Tacit': 'Understood or implied without being stated',
-    'Tantamount': 'Equivalent in seriousness to; virtaully the same as',
+    'Tantamount': 'Equivalent in seriousness to; virtually the same as',
     'Tawdry': 'Showy but cheap and of poor quality',
     'Temerity': 'Excessive confidence or boldness; audacity',
     'Tenacity': 'Persistent; being very determined',
