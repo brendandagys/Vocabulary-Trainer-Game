@@ -93,7 +93,7 @@ class Game:
 
         # Never take input once the game is over
         if self.game_over:
-            return self.send_response()
+            return self.send_data()
 
         # If guessing for the Word is over...
         if self.current_word_instance.done_guessing:
@@ -112,9 +112,9 @@ class Game:
                 self.current_word_number -= 1  # Otherwise it's 1-too-high in final results
                 self.game_over = True
 
-        return self.send_response()
+        return self.send_data()
 
-    def send_response(self):
+    def send_data(self):
         return json.dumps({
             'game_id': self.game_id,
             'game_over': self.game_over,
@@ -132,7 +132,7 @@ if __name__ == '__main__':
 
     game = Game(definition_dict, 3)
 
-    game.send_response()
+    game.send_data()
     game.take_client_input('=')
     game.take_client_input('=')
     game.take_client_input('My guess')
