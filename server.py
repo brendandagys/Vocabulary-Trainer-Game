@@ -12,8 +12,12 @@ import uuid
 games_dict = {}
 
 
+ORIGIN = os.environ['ORIGIN'] if 'ORIGIN' in os.environ else 'http://localhost:'
+PORT = os.environ['PORT'] if 'PORT' in os.environ else 5000
+
+
 app = Flask(__name__)
-CORS(app)  # , resources={r'*': {'origins': '*'}})
+CORS(app, resources={r'/api/*': {'origins': f'{ORIGIN}{PORT}'}})
 
 
 @app.route('/api/health', methods=['GET'])
@@ -131,10 +135,9 @@ def handle_guess():
         return f'Please provide {game_id}{separator}{guess}.'
 
 
-PORT = os.environ['PORT'] if 'PORT' in os.environ else 5000
-
 if __name__ == '__main__':
-    print(f'API server running on port {PORT}.')
+    print(f'API server running on port {PORT}...')
+
     from waitress import serve
     serve(app, listen=f'*:{PORT}')  # IPv4 and IPv6
     # serve(app, host='0.0.0.0', port=PORT)  # IPv4 only
