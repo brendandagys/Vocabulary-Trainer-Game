@@ -12,12 +12,13 @@ import uuid
 games_dict = {}
 
 
-ORIGIN = os.environ['ORIGIN'] if 'ORIGIN' in os.environ else 'http://localhost:'
+ORIGIN = os.environ['ORIGIN'] if 'ORIGIN' in os.environ else 'http://localhost'
 PORT = os.environ['PORT'] if 'PORT' in os.environ else 5000
 
 
 app = Flask(__name__)
-CORS(app, resources={r'/api/*': {'origins': f'{ORIGIN}{PORT}'}})
+CORS(app, resources={
+     r'/api/*': {'origins': ORIGIN}})  # https://brendandagys.com
 
 
 @app.route('/api/health', methods=['GET'])
