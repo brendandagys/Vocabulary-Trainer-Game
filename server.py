@@ -12,7 +12,7 @@ import uuid
 games_dict = {}
 
 
-ORIGIN = os.environ['ORIGIN'] if 'ORIGIN' in os.environ else 'http://localhost'
+ORIGIN = os.environ['ORIGIN'] if 'ORIGIN' in os.environ else 'http://localhost:3000'
 PORT = os.environ['PORT'] if 'PORT' in os.environ else 5000
 
 
@@ -51,7 +51,7 @@ def check_if_game_is_started():
     if game_id not in games_dict:
         return 'Please provide a valid `game_id`.', 400
 
-    print(games_dict[game_id])
+    # print(games_dict[game_id])
     if games_dict[game_id]:
         return json.dumps(True)
     return json.dumps(False)
